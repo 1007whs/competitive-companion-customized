@@ -25,23 +25,31 @@ export class NKSProblemParser extends Parser {
         task.setTimeLimit(1000);
         task.setMemoryLimit(1024);
 
-        // 保留空格和换行
-        this.parseSamplesWithSpacesAndNewlines(elem, task);
+        // 核心逻辑：保留空格、换行，并移除中文解释
+        this.parseSamplesWithChineseCleanup(elem, task);
 
         return task.build();
     }
 
-    //保留所有空格（包括HTML实体空格）和换行
-    private parseSamplesWithSpacesAndNewlines(elem: Element, task: TaskBuilder): void {
+    /**
+     * 处理样例：保留空格和换行，移除中文解释（从第一个中文字符到末尾）
+     */
+    private parseSamplesWithChineseCleanup(elem: Element, task: TaskBuilder): void {
+        // 处理样例输入
         const inputElements = Array.from(elem.querySelectorAll('[id^="SampleInput-"]'))
             .map(el => {
                 const pTag = el.querySelector('p');
                 if (!pTag) return { number: -1, content: '' };
-                let content = pTag.innerHTML;
-                content = content.replace(/<\/?p>/gi, '');
-                // 处理&nbsp;、&#160;等常见空格实体
-                content = content.replace(/&nbsp;|&#160;/gi, ' ');
-                content = content.trim();
+
+                // 1. 基础处理：移除<p>标签，转换空格实体
+                let content = pTag.innerHTML
+                    .replace(/<\/?p>/gi, '') // 移除<p>标签
+                    .replace(/&nbsp;|&#160;/gi, ' ') // 转换空格实体
+                    .trim(); // 去除首尾空白
+
+                // 2. 核心：移除中文解释（从第一个中文字符到末尾）
+                content = this.removeChineseExplanation(content);
+
                 return {
                     number: parseInt(el.id.split('-')[1], 10),
                     content
@@ -49,15 +57,19 @@ export class NKSProblemParser extends Parser {
             })
             .filter(item => item.number !== -1)
             .sort((a, b) => a.number - b.number);
+
+        // 处理样例输出（同输入逻辑）
         const outputElements = Array.from(elem.querySelectorAll('[id^="SampleOutput-"]'))
             .map(el => {
                 const pTag = el.querySelector('p');
                 if (!pTag) return { number: -1, content: '' };
 
-                let content = pTag.innerHTML;
-                content = content.replace(/<\/?p>/gi, '');
-                content = content.replace(/&nbsp;|&#160;/gi, ' ');
-                content = content.trim();
+                let content = pTag.innerHTML
+                    .replace(/<\/?p>/gi, '')
+                    .replace(/&nbsp;|&#160;/gi, ' ')
+                    .trim();
+
+                content = this.removeChineseExplanation(content);
 
                 return {
                     number: parseInt(el.id.split('-')[1], 10),
@@ -67,10 +79,31 @@ export class NKSProblemParser extends Parser {
             .filter(item => item.number !== -1)
             .sort((a, b) => a.number - b.number);
 
-        // 配对
+        // 配对样例
         const maxCount = Math.min(inputElements.length, outputElements.length);
         for (let i = 0; i < maxCount; i++) {
             task.addTest(inputElements[i].content, outputElements[i].content);
         }
+    }
+
+    /**
+     * 移除从第一个中文字符到末尾的内容，保留末尾换行
+     * 中文范围：\u4e00-\u9fa5（基本汉字）
+     */
+    private removeChineseExplanation(content: string): string {
+        // 匹配第一个中文字符的位置
+        const chineseMatch = content.match(/[\u4e00-\u9fa5]/);
+        if (!chineseMatch) {
+            // 无中文，直接返回
+            return content;
+        }
+
+        // 截取到第一个中文字符之前的内容
+        const cutoffIndex = chineseMatch.index;
+        let cleaned = content.substring(0, cutoffIndex);
+
+        // 保留末尾的换行（如果原始内容在中文前有换行）
+        // 例如："abc\n123 中文解释" → 截取后为"abc\n123"（保留换行）
+        return cleaned;
     }
 }
