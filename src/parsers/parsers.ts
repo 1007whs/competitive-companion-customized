@@ -118,6 +118,7 @@ import { MetaCodingCompetitionsProblemParser } from './problem/MetaCodingCompeti
 import { MrJudgeProblemParser } from './problem/MrJudgeProblemParser';
 import { MSKInformaticsProblemParser } from './problem/MSKInformaticsProblemParser';
 import { NBUTOnlineJudgeProblemParser } from './problem/NBUTOnlineJudgeProblemParser';
+import { NKSProblemParser } from './problem/NKSProblemParser';
 import { NepsAcademyProblemParser } from './problem/NepsAcademyProblemParser';
 import { NewtonSchoolProblemParser } from './problem/NewtonSchoolProblemParser';
 import { NOJProblemParser } from './problem/NOJProblemParser';
@@ -328,7 +329,7 @@ export const parsers: Parser[] = [
   new NBUTOnlineJudgeContestParser(),
 
   new NepsAcademyProblemParser(),
-
+  new NKSProblemParser(),
   new NewtonSchoolProblemParser(),
 
   new NOJProblemParser(),
