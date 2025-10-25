@@ -3,7 +3,7 @@ import { TaskBuilder } from '../../models/TaskBuilder';
 import { htmlToElement } from '../../utils/dom';
 import { Parser } from '../Parser';
 
-export class NKSProblemParser extends Parser {
+export class NKOJProblemParser extends Parser {
     public getMatchPatterns(): string[] {
         return ['http://oi.nks.edu.cn/zh/Problem/Details*'];
     }

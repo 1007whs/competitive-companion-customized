@@ -34,7 +34,7 @@ import { LightOJContestParser } from './contest/LightOJContestParser';
 import { LuoguContestParser } from './contest/LuoguContestParser';
 import { MarisaOJContestParser } from './contest/MarisaOJContestParser';
 import { NBUTOnlineJudgeContestParser } from './contest/NBUTOnlineJudgeContestParser';
-import { NKSContestParser } from './contest/NKSContestParser';
+import { NKOJContestParser } from './contest/NKOJContestParser';
 import { NOJContestParser } from './contest/NOJContestParser';
 import { OpenJudgeContestParser } from './contest/OpenJudgeContestParser';
 import { PEGJudgeContestParser } from './contest/PEGJudgeContestParser';
@@ -119,9 +119,9 @@ import { MetaCodingCompetitionsProblemParser } from './problem/MetaCodingCompeti
 import { MrJudgeProblemParser } from './problem/MrJudgeProblemParser';
 import { MSKInformaticsProblemParser } from './problem/MSKInformaticsProblemParser';
 import { NBUTOnlineJudgeProblemParser } from './problem/NBUTOnlineJudgeProblemParser';
-import { NKSProblemParser } from './problem/NKSProblemParser';
 import { NepsAcademyProblemParser } from './problem/NepsAcademyProblemParser';
 import { NewtonSchoolProblemParser } from './problem/NewtonSchoolProblemParser';
+import { NKOJProblemParser } from './problem/NKOJProblemParser';
 import { NOJProblemParser } from './problem/NOJProblemParser';
 import { NowCoderProblemParser } from './problem/NowCoderProblemParser';
 import { OlympicodeProblemParser } from './problem/OlympicodeProblemParser';
@@ -327,15 +327,15 @@ export const parsers: Parser[] = [
   new MSKInformaticsProblemParser(),
 
   new NBUTOnlineJudgeProblemParser(),
+  new NBUTOnlineJudgeProblemParser(),
   new NBUTOnlineJudgeContestParser(),
 
   new NepsAcademyProblemParser(),
 
-  new NKSProblemParser(),
-  new NKSContestParser(),
+  new NKOJProblemParser(),
+  new NKOJContestParser(),
 
   new NewtonSchoolProblemParser(),
-
   new NOJProblemParser(),
   new NOJContestParser(),
 
