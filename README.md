@@ -1,9 +1,10 @@
 # Competitive Companion Customized
 这不是官方的 Competitive Companion 扩展，而是一个定制版本，为了满足个人需求而开发。
+[官方链接](https://github.com/lnw143/competitive-companion-customized?tab=readme-ov-file)
 里面添加了对 NKOJ (或许还有其他) 的支持
 基于 RedPanda IDE (http://royqh.net/redpandacpp/) 测试，暂时没有问题
 
-这个项目仍然会遵循 MIT 协议。
+这个项目当然会遵循 MIT 协议。
 
 ## 支持的网站
 | 网站                       | Problem parser | Contest parser |
