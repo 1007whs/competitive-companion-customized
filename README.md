@@ -121,4 +121,4 @@
 | Yun Dou Xue Yuan           | ✔              | ✔              |
 | ZOJ                        | ✔              |                |
 | ZUFEOJ                     | ✔              | ✔              |
-| NKOJ                       | ✔              | (✔)            |
+| NKOJ                       | ✔              | ✔              |
